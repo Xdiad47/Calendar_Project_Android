@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
 
         initWidget();
-        selectdate = LocalDate.now();
+       // selectdate = LocalDate.now();
+        getSelectDate();
         setMonthView();
 
        // month_spinner.setOnItemSelectedListener(this);
@@ -82,6 +83,11 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
                     Toast.makeText(MainActivity.this, "Selected Month: " + seltmont, Toast.LENGTH_SHORT).show();
                     textviewMonth.setText(seltmont);
+
+
+                    //added
+                    getSelectDate();
+                    updatedView();
                     setMonthView();
                 }
 
@@ -101,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                  selctYear = parent.getSelectedItem().toString();
                  Toast.makeText(MainActivity.this, "Selected Year" + selctYear, Toast.LENGTH_SHORT).show();
                  textviewYear.setText(selctYear);
+                 getSelectDate();
                  setMonthView();
              }
 
@@ -116,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         // ---- on click listener ---//
 
 
-        String month = month_spinner.getSelectedItem().toString();
+   /*     String month = month_spinner.getSelectedItem().toString();
         String year= spinYear.getSelectedItem().toString();
 
 
@@ -132,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMMM/yyyy");
-        selectdate = LocalDate.parse(combinedString, formatter);
+        selectdate = LocalDate.parse(combinedString, formatter); */
 
      /*   //not working
         String mon = textviewMonth.getText().toString();
@@ -141,6 +148,41 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         Log.d("month","code cross the textviewYearnMonth"); */
       //  textviewYearnMonth.setText(seltmont);
 
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void getSelectDate() {
+
+        //added
+        String month = month_spinner.getSelectedItem().toString();
+        String year = spinYear.getSelectedItem().toString();
+
+
+        //String month = textviewMonth.getText().toString();
+        //String year = textviewYear.getText().toString();
+
+
+        //combinedString = "16/09/2019";
+        combinedString = "01/" + month + "/" + year;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMMM/yyyy");
+        selectdate = LocalDate.parse(combinedString, formatter);
+        //
+
+    }
+
+    //added
+    private void updatedView() {
+
+        // combinedString = "01/" + mon + "/" + year ;
+
+        //not working
+        //String mon = textviewMonth.getText().toString();
+        textviewMonth.getText().toString();
+        //  Log.d("month","code is going here");
+        //  textviewYearnMonth.setText(mon);
+        // Log.d("month","code cross the textviewYearnMonth");
+        //textviewYearnMonth.setText(mon);
 
     }
 
@@ -187,6 +229,23 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView() {
+
+
+   /*     //added
+        String month = month_spinner.getSelectedItem().toString();
+        String year = spinYear.getSelectedItem().toString();
+
+
+        //String month = textviewMonth.getText().toString();
+        //String year = textviewYear.getText().toString();
+
+
+        //combinedString = "16/09/2019";
+        combinedString = "01/" + month + "/" + year;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMMM/yyyy");
+        selectdate = LocalDate.parse(combinedString, formatter);
+        //
+*/
 
 
         monthYearText.setText(monthYearFromDate(selectdate));
@@ -265,6 +324,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
             String message = "Selected Date " + dayText + " " + monthYearFromDate(selectdate);
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             //Put Textview here and settext(message);
+            textviewYearnMonth.setText(message);
         }
 
 
