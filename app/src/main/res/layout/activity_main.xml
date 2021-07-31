@@ -41,13 +41,20 @@
         android:textSize="20sp"
         />
 
+    <TextView
+        android:id="@+id/Date"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:text="Display for month and year"
+        android:textSize="20sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="90dp">
+        android:layout_marginTop="10dp">
         
 
         <Button
@@ -160,7 +167,110 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="200dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+<!--
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=""
+            android:text="Time"
+            android:textColor="@color/black"
+            android:layout_marginTop="40dp"
+            android:textSize="20sp" /> -->
+<!--
+        <TimePicker
+            android:id="@+id/simpleTimePicker"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:timePickerMode="spinner" />
+
+-->
+
+        <TextClock
+            android:id="@+id/textClock"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:format12Hour="hh:mm"
+            />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/pink_out_line"
+            android:orientation="horizontal">
+            <!--
+            android:checkedButton="@+id/offer"
+            android:id="@+id/toggle"
+            -->
+
+            <RadioButton
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:id="@+id/AM"
+                android:checked="true"
+                android:background="@drawable/toggle_widget_background"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:gravity="center"
+                android:text="AM"
+                android:textColor="@color/white"
+                android:onClick="checkButton"/>
+
+            <RadioButton
+                android:layout_marginRight="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:id="@+id/PM"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="PM"
+                android:textColor="@color/white"
+                android:onClick="checkButton"/>
+        </RadioGroup>
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/TimeDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Time Is ::"
+        android:textColor="#090"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_view_selected"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:text="Click"
+        />
+
+
 
 
 

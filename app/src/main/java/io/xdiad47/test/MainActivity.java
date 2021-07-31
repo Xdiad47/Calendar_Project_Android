@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,23 +19,46 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener { //, AdapterView.OnItemSelectedListener
 
-    TextView monthYearText, textviewMonth,textviewYear,textviewYearnMonth;
+    TextView monthYearText, textviewMonth,textviewYear,textviewYearnMonth, Date;
     RecyclerView calendarReyclerView;
     LocalDate selectdate;
 
+//new
+    TextClock textClock;
+
+   // TextView time;
+   // TimePicker simpleTimePicker;
+
+    RadioGroup radioGroup;
+    RadioButton radioButton;
+    TextView textView;
+    Button button;
+
+    AlertDialog dialog;
+    EditText editText;
+
+//new
    private Spinner month_spinner,spinYear;
     String [] months;
 
@@ -48,6 +75,98 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Date = findViewById(R.id.Date);
+
+        //Time
+
+       // time = findViewById(R.id.TimeDisplay);
+        textClock = findViewById(R.id.textClock);
+
+        dialog = new AlertDialog.Builder(this).create();
+        editText = new EditText(this);
+
+        dialog.setTitle("Please input Time as: 12:24 or 01:04");
+        dialog.setView(editText);
+
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Save Time", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                textClock.setText(editText.getText());
+            }
+        });
+
+        textClock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.setText(textClock.getText());
+                dialog.show();
+            }
+        });
+
+        /*textClock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                @SuppressLint("SimpleDateFormat")
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm");
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mtimePickerDialog;
+                mtimePickerDialog = new TimePickerDialog(MainActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @SuppressLint("DefaultLocale")
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        //textClock.setText(hourOfDay + ":" + minute);
+                      //  time.setText(String.format("%02d:%02d", hourOfDay, minute));
+                        textClock.setText(String.format("%02d:%02d", hourOfDay, minute));
+
+                    }
+                }, hour, minute, false);
+                mtimePickerDialog.setTitle("Select Time");
+                mtimePickerDialog.show();
+            }
+        }); */
+
+        radioGroup = findViewById(R.id.radioGroup);
+        textView = findViewById(R.id.text_view_selected);
+
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int radioId = radioGroup.getCheckedRadioButtonId();
+
+                radioButton = findViewById(radioId);
+
+               textView.setText("Your Choice: " +textClock.getText() +" " + radioButton.getText()  ); //this textview will go for shared preferences
+                //time.setText("Your Choice: " +time.getText() +" " + radioButton.getText()  );
+
+            }
+        });
+
+
+
+
+/*
+        //  initiate the view's
+        time = (TextView) findViewById(R.id.time);
+        simpleTimePicker = (TimePicker) findViewById(R.id.simpleTimePicker);
+        simpleTimePicker.setIs24HourView(false); // used to display AM/PM mode
+        // perform set on time changed listener event
+        simpleTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                // display a toast with changed values of time picker
+                Toast.makeText(getApplicationContext(), hourOfDay + "  " + minute, Toast.LENGTH_SHORT).show();
+                time.setText("Time is :: " + hourOfDay + " : " + minute); // set the current time in text view
+            }
+        });
+*/
+        //Time
+
 
         textviewMonth = findViewById(R.id.textviewMonth);//new
         textviewYear = findViewById(R.id.textviewYear);//new
@@ -167,11 +286,14 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         combinedString = "01/" + month + "/" + year;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMMM/yyyy");
         selectdate = LocalDate.parse(combinedString, formatter);
+        selectdate.getMonthValue();
+        Log.d("ZI", String.valueOf(selectdate));
         //
 
     }
 
     //added
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void updatedView() {
 
         // combinedString = "01/" + mon + "/" + year ;
@@ -183,6 +305,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         //  textviewYearnMonth.setText(mon);
         // Log.d("month","code cross the textviewYearnMonth");
         //textviewYearnMonth.setText(mon);
+      //  Date.setText(DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(selectdate));
 
     }
 
@@ -241,9 +364,9 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
 
         //combinedString = "16/09/2019";
-        combinedString = "01/" + month + "/" + year;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMMM/yyyy");
-        selectdate = LocalDate.parse(combinedString, formatter);
+        //combinedString = "01/" + month + "/" + year;
+       // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMMM/yyyy");
+      //  selectdate = LocalDate.parse(combinedString, formatter);
         //
 */
 
@@ -324,9 +447,27 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
             String message = "Selected Date " + dayText + " " + monthYearFromDate(selectdate);
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             //Put Textview here and settext(message);
-            textviewYearnMonth.setText(message);
+         //   textviewYearnMonth.setText(message); //Try to put logic here to send the data to sashido. output:- 01/june/2021
+
+            //combinedString = "16/09/2019";
+            //combinedString = "01/" + month + "/" + year;
+            // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMMM/yyyy");
+            //  selectdate = LocalDate.parse(combinedString, formatter);
+
+            //01/06/2021
+            textviewYearnMonth.setText(DateTimeFormatter.ofPattern(dayText+"/MM/yyyy",Locale.ENGLISH).format(selectdate));
         }
 
+
+    }
+
+    public void checkButton(View view) {
+
+        int radioId = radioGroup.getCheckedRadioButtonId();
+
+        radioButton = findViewById(radioId);
+
+        Toast.makeText(this, "Selected Radio Button" + radioButton.getText(), Toast.LENGTH_SHORT).show();
 
     }
 
