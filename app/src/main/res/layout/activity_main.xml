@@ -172,7 +172,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
         >
@@ -195,12 +195,21 @@
 
 -->
 
-        <TextClock
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+
+            android:id="@+id/EditClock"
+            android:inputType="time"
+            />
+
+
+   <!--     <TextClock
             android:id="@+id/textClock"
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:format12Hour="hh:mm"
-            />
+            /> -->
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"

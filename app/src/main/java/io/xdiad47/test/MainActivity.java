@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     LocalDate selectdate;
 
 //new
-    TextClock textClock;
+   // TextClock textClock;
+
+    EditText EditClock;
 
    // TextView time;
    // TimePicker simpleTimePicker;
@@ -81,8 +83,10 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
         //Time
 
+        EditClock = findViewById(R.id.EditClock);
+
        // time = findViewById(R.id.TimeDisplay);
-        textClock = findViewById(R.id.textClock);
+     /*   textClock = findViewById(R.id.textClock);
 
         dialog = new AlertDialog.Builder(this).create();
         editText = new EditText(this);
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 dialog.show();
             }
         });
-
+*/
         /*textClock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,8 +145,9 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
                 radioButton = findViewById(radioId);
 
-               textView.setText("Your Choice: " +textClock.getText() +" " + radioButton.getText()  ); //this textview will go for shared preferences
+              // textView.setText("Your Choice: " +textClock.getText() +" " + radioButton.getText()  ); //this textview will go for shared preferences
                 //time.setText("Your Choice: " +time.getText() +" " + radioButton.getText()  );
+                textView.setText("your choice: "+EditClock.getText() + " " + radioButton.getText() );
 
             }
         });
