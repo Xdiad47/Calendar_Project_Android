@@ -25,12 +25,18 @@
     <TextView
         android:id="@+id/textviewMonth"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         />
     <TextView
         android:id="@+id/textviewYear"
         android:layout_width="150dp"
+        android:layout_height="0dp"
+        />
+    <Button
+        android:id="@+id/buttonToDisplay"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:text="Display"
         />
     <TextView
         android:id="@+id/textviewYearnMonth"
@@ -47,6 +53,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="150dp"
         android:text="Display for month and year"
+        android:textSize="20sp"/>
+    <TextView
+        android:id="@+id/UTCTimeZone"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:text="Display UTC Zone"
         android:textSize="20sp"/>
 
     <LinearLayout
@@ -257,7 +270,7 @@
 
 
     </LinearLayout>
-    <TextView
+  <!--  <TextView
         android:id="@+id/TimeDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -265,7 +278,7 @@
         android:text="Time Is ::"
         android:textColor="#090"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" /> -->
 
     <TextView
         android:layout_width="wrap_content"
@@ -279,6 +292,28 @@
         android:text="Click"
         />
 
+    <TextView
+        android:id="@+id/LocalTime"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Local Time"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:id="@+id/UtTimeToLocal"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="UT Time to local time"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="local time"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        />
 
 
 

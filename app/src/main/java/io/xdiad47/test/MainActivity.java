@@ -29,21 +29,28 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.sql.Time;
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener { //, AdapterView.OnItemSelectedListener
 
-    TextView monthYearText, textviewMonth,textviewYear,textviewYearnMonth, Date;
+    TextView monthYearText, textviewMonth,textviewYear,textviewYearnMonth, DateText;
     RecyclerView calendarReyclerView;
     LocalDate selectdate;
 
+    Button buttonToDisplay;
+    TextView UTCTimeZone,LocalTime,UtTimeToLocal;
 //new
    // TextClock textClock;
 
@@ -57,8 +64,10 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     TextView textView;
     Button button;
 
-    AlertDialog dialog;
-    EditText editText;
+    String outputText;
+
+   // AlertDialog dialog;
+    //EditText editText;
 
 //new
    private Spinner month_spinner,spinYear;
@@ -79,7 +88,10 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         setContentView(R.layout.activity_main);
 
 
-        Date = findViewById(R.id.Date);
+        DateText = findViewById(R.id.Date);
+
+        buttonToDisplay = findViewById(R.id.buttonToDisplay);
+        UTCTimeZone = findViewById(R.id.UTCTimeZone);
 
         //Time
 
@@ -147,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
               // textView.setText("Your Choice: " +textClock.getText() +" " + radioButton.getText()  ); //this textview will go for shared preferences
                 //time.setText("Your Choice: " +time.getText() +" " + radioButton.getText()  );
-                textView.setText("your choice: "+EditClock.getText() + " " + radioButton.getText() );
+                //textView.setText("your choice: "+EditClock.getText() + " " + radioButton.getText() );
+                textView.setText(EditClock.getText() + " " + radioButton.getText() );
 
             }
         });
@@ -271,6 +284,56 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         textviewYearnMonth.setText(mon);
         Log.d("month","code cross the textviewYearnMonth"); */
       //  textviewYearnMonth.setText(seltmont);
+
+      //  String time = textView.getText().toString();
+       // String date = textviewYearnMonth.getText().toString();
+
+
+       // Date.setText(textView.getText() + textviewYearnMonth.getText() );
+        //Date.setText(time + date);
+
+        buttonToDisplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String time = textView.getText().toString();
+                String date = textviewYearnMonth.getText().toString();
+                String ti = date +  time;
+                 DateText.setText( ti);
+
+                //new
+                @SuppressLint("SimpleDateFormat") DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+                outputFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+                @SuppressLint("SimpleDateFormat") DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+
+                String inputText = date +" " + time;
+                Date date1 = null;
+                try {
+                    date1 = inputFormat.parse(inputText);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                assert date1 != null;
+                outputText = outputFormat.format(date1);
+              //  UTCTimeZone.setText("GMT: ", TextView.BufferType.valueOf(outputFormat.format(date1)));
+                UTCTimeZone.setText("UTC: " + outputText);
+
+
+            }
+        });
+
+        //Extra to convert local time to GMT or UTC
+        LocalTime = findViewById(R.id.LocalTime);
+
+        UtTimeToLocal = findViewById(R.id.UtTimeToLocal);
+
+        Date localTime = new Date();
+        DateFormat s = new SimpleDateFormat("dd/MM/yyyy"
+                + " "
+                + " HH:mm:ss");
+        s.setTimeZone(TimeZone.getTimeZone("GMT"));
+        LocalTime.setText(""+ localTime);
+        UtTimeToLocal.setText(""+s.format(localTime));
 
 
     }
@@ -474,6 +537,15 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
         Toast.makeText(this, "Selected Radio Button" + radioButton.getText(), Toast.LENGTH_SHORT).show();
 
+    }
+
+
+    public java.util.Date LocalToUTC(){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date gmt = new Date(sdf.format(date));
+        return gmt;
     }
 
 
